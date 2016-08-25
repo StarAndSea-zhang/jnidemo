@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "com.zy.fengchun.jnidemo"
+        minSdkVersion 15
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            moduleName "NdkJniDemo"          //生成的so名字
+            abiFilters "armeabi", "armeabi-v7a", "x86" //输出指定三种abi体系结构下的so库，目前可有可无。
+            ldLibs = ["android", "log"]
+        }
+    }
+
+
+    buildTypes {
+        debug {
+            //debug模式
+            buildConfigField("boolean", "API_ENV", "true")
+            //内网地址
+        }
+        release {
+            buildConfigField("boolean", "API_ENV", "false")
+            //外网地址
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jni/'] } }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:19.1.0'
+}
