@@ -54,6 +54,47 @@ JNIEXPORT jstring JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_generateStringFr
  */
 JNIEXPORT jstring JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_accessStaticField
         (JNIEnv *, jobject);
+
+/*
+ * Class:     com_zy_fengchun_jnidemo_JniUtils
+ * Method:    accessConstructor
+ * Signature: ()Ljava/util/Date;
+ */
+JNIEXPORT jobject JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_accessConstructor
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_zy_fengchun_jnidemo_JniUtils
+ * Method:    accessNonvirtualMethod
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_accessNonvirtualMethod
+  (JNIEnv *, jobject);
+
+/*
+ * Class:     com_zy_fengchun_jnidemo_JniUtils
+ * Method:    chineseChars
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_chineseChars
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     com_zy_fengchun_jnidemo_JniUtils
+ * Method:    setArray
+ * Signature: ([I)V
+ */
+JNIEXPORT jintArray JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_setArray
+(JNIEnv *, jobject, jintArray);
+
+/*
+ * Class:     com_zy_fengchun_jnidemo_JniUtils
+ * Method:    getArray
+ * Signature: (I)[I
+ */
+JNIEXPORT jintArray JNICALL Java_com_zy_fengchun_jnidemo_JniUtils_getArray
+        (JNIEnv *, jobject, jint);
+
 #ifdef __cplusplus
 }
 #endif

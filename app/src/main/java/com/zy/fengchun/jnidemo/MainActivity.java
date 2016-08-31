@@ -34,6 +34,14 @@ public class MainActivity extends Activity {
         jniUtils.generateStringFromVariable();
         mTVName.setText(jniUtils.mName);
         jniUtils.accessStaticField();
-        mTVStaticName.setText(JniUtils.mStaticName);
+        mTVStaticName.setText(jniUtils.chineseChars("this is"));
+        jniUtils.accessConstructor();
+//        jniUtils.accessNonvirtualMethod();
+        int[] arr = {9,1,7,8,2,3,6,12,4};
+        arr = jniUtils.getArray(10);
+        for (int i = 0;i< arr.length;i++)
+        {
+            Log.e("TAG",arr[i]+"");
+        }
     }
 }
