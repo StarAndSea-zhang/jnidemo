@@ -3,6 +3,7 @@
 /* Header for class com_zy_fengchun_jnidemo_JniUtils */
 #include <android/log.h>
 #include <string.h>
+
 #define LOG_TAG "TAG"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
