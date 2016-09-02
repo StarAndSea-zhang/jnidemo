@@ -32,13 +32,13 @@ public class MainActivity extends Activity {
         mTVName = (TextView) findViewById(R.id.tv_name);
         mTVStaticName = (TextView) findViewById(R.id.tv_staticname);
 
-        JniUtils jniUtils = new JniUtils();
-        mTextView.setText(jniUtils.generateNewString("writer is"));
-        jniUtils.generateStringFromVariable();
-        mTVName.setText(jniUtils.mName);
-        jniUtils.accessStaticField();
-        mTVStaticName.setText(jniUtils.chineseChars("this is"));
-        jniUtils.accessConstructor();
+//        JniUtils jniUtils = new JniUtils();
+//        mTextView.setText(jniUtils.generateNewString("writer is"));
+//        jniUtils.generateStringFromVariable();
+//        mTVName.setText(jniUtils.mName);
+//        jniUtils.accessStaticField();
+//        mTVStaticName.setText(jniUtils.chineseChars("this is"));
+//        jniUtils.accessConstructor();
         initDrawable();
 //        jniUtils.accessNonvirtualMethod();
 //        int[] arr = {9,1,7,8,2,3,6,12,4};
@@ -57,9 +57,9 @@ public class MainActivity extends Activity {
         int[] pix = new int[w * h];
         bitmap.getPixels(pix, 0, w, 0, 0, w, h);
         int [] resultPixes=OpenCVTest.gray(pix,w,h);
-//        Bitmap result = Bitmap.createBitmap(w,h, Bitmap.Config.RGB_565);
-//        result.setPixels(resultPixes, 0, w, 0, 0,w, h);
-//        ImageView img=(ImageView)findViewById(R.id.imageview);
-//        img.setImageBitmap((result));
+        Bitmap result = Bitmap.createBitmap(w,h, Bitmap.Config.RGB_565);
+        result.setPixels(resultPixes, 0, w, 0, 0,w, h);
+        ImageView img=(ImageView)findViewById(R.id.imageview);
+        img.setImageBitmap((result));
     }
 }

@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 apply plugin: 'com.android.application'
 
 android {
@@ -10,13 +12,44 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        ndk {
-            moduleName "NdkJniDemo"          //生成的so名字
-            abiFilters "armeabi", "armeabi-v7a", "x86" //输出指定三种abi体系结构下的so库，目前可有可无。
-            ldLibs = ["android", "log"]
+//        ndk {
+////            moduleName "NdkJniDemo"          //生成的so名字
+////            abiFilters "armeabi", "armeabi-v7a", "x86" //输出指定三种abi体系结构下的so库，目前可有可无。
+//            ldLibs = ["android", "log"]
+//        }
+    }
+
+    sourceSets {
+        main {
+        jniLibs.srcDirs = ['src/main/libs', 'src/main/jniLibs']
+        jni.srcDirs = [] //disable automatic ndk-build call
+        }
+    }
+    project.ext.versionCodes = ['armeabi':1, 'armeabi-v7a':2, 'arm64-v8a':3, 'mips':5, 'mips64':6, 'x86':8, 'x86_64':9]
+
+    android.applicationVariants.all { variant ->
+        // assign different version code for each output
+        variant.outputs.each { output ->
+            output.versionCodeOverride =
+                    project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1000000 + defaultConfig.versionCode
         }
     }
 
+    task ndkBuild(type: Exec) {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+        def ndkDir = properties.getProperty('ndk.dir')
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine "$ndkDir/ndk-build.cmd", '-C', file('src/main/jni').absolutePath
+        } else {
+            commandLine "$ndkDir/ndk-build", '-C', file('src/main/jni').absolutePath
+        }
+    }
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
 
     buildTypes {
         debug {
@@ -31,14 +64,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main {
-        jni.srcDirs = ['src/main/jni', 'src/main/jni/']
-    } }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:19.1.0'
-    compile project(':openCVLibrary310')
+//    compile project(':openCVLibrary310')
 }
